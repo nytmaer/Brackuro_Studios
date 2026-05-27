@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brackuro Studios | Narrative Worlds, VR Systems, Creative Tech</title>
+  <meta name="description" content="Brackuro Studios creates narrative worlds, VR combat systems, interactive experiences, AI-assisted creative pipelines, music, and digital fashion ecosystems." />
+  <style>
+    :root {
+      --bg: #07070b;
+      --bg-soft: #10101a;
+      --card: #151521;
+      --card-2: #1b1b2a;
+      --text: #f4f1ff;
+      --muted: #aaa4c5;
+      --line: rgba(255, 255, 255, 0.11);
+      --purple: #8b5cf6;
+      --cyan: #22d3ee;
+      --pink: #f472b6;
+      --gold: #facc15;
+      --shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(139, 92, 246, 0.28), transparent 36rem),
+        radial-gradient(circle at top right, rgba(34, 211, 238, 0.18), transparent 28rem),
+        radial-gradient(circle at 50% 20%, rgba(244, 114, 182, 0.10), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .site-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 7, 11, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-logo {
+      width: 58px;
+      height: 58px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 0 28px rgba(139, 92, 246, 0.45);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 92px 0 56px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.82rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 8vw, 6.75rem);
+      line-height: 0.92;
+      letter-spacing: -0.08em;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff, var(--cyan), var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      max-width: 690px;
+      color: var(--muted);
+      font-size: clamp(1.08rem, 2vw, 1.28rem);
+      margin-bottom: 30px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      color: #050508;
+      border: 0;
+      box-shadow: 0 14px 40px rgba(139, 92, 246, 0.32);
+    }
+
+    .button.ghost {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 500px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03)),
+        var(--card);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      padding: 24px;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(2px);
+      opacity: 0.9;
+    }
+
+    .orb.one {
+      width: 180px;
+      height: 180px;
+      right: -42px;
+      top: -36px;
+      background: rgba(34, 211, 238, 0.48);
+    }
+
+    .orb.two {
+      width: 250px;
+      height: 250px;
+      left: -90px;
+      bottom: -80px;
+      background: rgba(139, 92, 246, 0.35);
+    }
+
+    .studio-panel {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .panel-top {
+      display: grid;
+      gap: 14px;
+    }
+
+    .status-pill {
+      width: fit-content;
+      border: 1px solid rgba(34, 211, 238, 0.4);
+      color: var(--cyan);
+      background: rgba(34, 211, 238, 0.08);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .panel-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      font-weight: 950;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .signal {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.22);
+    }
+
+    .signal strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .signal span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    section {
+      padding: 70px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 26px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 4vw, 3.7rem);
+      line-height: 1;
+      letter-spacing: -0.055em;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.035)),
+        var(--card);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.22);
+      padding: 24px;
+    }
+
+    .card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .feature {
+      min-height: 310px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: rgba(139, 92, 246, 0.18);
+      border: 1px solid rgba(139, 92, 246, 0.36);
+      font-size: 1.4rem;
+      margin-bottom: 32px;
+    }
+
+    .project-card {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .project-art {
+      min-height: 180px;
+      background:
+        linear-gradient(135deg, rgba(139, 92, 246, 0.6), rgba(34, 211, 238, 0.28)),
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.35), transparent 13rem),
+        #111;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: end;
+      padding: 18px;
+    }
+
+    .project-art span {
+      color: rgba(255, 255, 255, 0.84);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+    }
+
+    .project-body {
+      padding: 24px;
+    }
+
+    .quote-band {
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 10px);
+      background:
+        linear-gradient(90deg, rgba(139, 92, 246, 0.20), rgba(34, 211, 238, 0.11), rgba(244, 114, 182, 0.14)),
+        rgba(255, 255, 255, 0.04);
+      padding: clamp(28px, 5vw, 54px);
+      box-shadow: var(--shadow);
+    }
+
+    .quote-band h2 {
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 16px;
+    }
+
+    .quote-band p {
+      color: var(--muted);
+      max-width: 780px;
+      font-size: 1.15rem;
+    }
+
+    .contact-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      padding: 28px 0;
+      font-size: 0.94rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .grid.two,
+      .grid.three,
+      .contact-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 62px;
+      }
+
+      .hero-card {
+        min-height: 420px;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .site-shell {
+        width: min(100% - 22px, 1180px);
+      }
+
+      section {
+        padding: 48px 0;
+      }
+
+      .signal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="site-shell nav">
+      <a class="brand" href="#top" aria-label="Brackuro Studios Home">
+        <img class="brand-logo" src="Official Brackuro Studios Art.jpg" alt="Brackuro Studios Logo" />
+        <span>Brackuro Studios</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="#work">Work</a>
+        <a href="#systems">Systems</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="site-shell hero">
+      <div>
+        <p class="eyebrow">Independent Creative Tech Studio</p>
+        <h1>Worlds. Systems. <span class="gradient-text">Mad Spark.</span></h1>
+        <p class="hero-copy">
+          Brackuro Studios builds narrative worlds, VR interaction systems, digital fashion concepts,
+          creator tools, AI-assisted pipelines, and music-driven experiences designed to feel alive.
+        </p>
+        <div class="cta-row">
+          <a class="button primary" href="#projects">Explore the Work</a>
+          <a class="button ghost" href="#contact">Connect</a>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Studio Snapshot">
+        <img src="Official Brackuro Studios Art.jpg" alt="Brackuro Studios Official Logo" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.14; mix-blend-mode:screen;" />
+        <div class="orb one"></div>
+        <div class="orb two"></div>
+        <div class="studio-panel">
+          <div class="panel-top">
+            <img src="Official Brackuro Studios Art.jpg" alt="Brackuro Studios Emblem" style="width:120px; border-radius:22px; border:1px solid rgba(255,255,255,0.12); box-shadow:0 0 32px rgba(139,92,246,0.35);" />
+            <span class="status-pill">Solo founder energy. Studio-level ambition.</span>
+            <div class="panel-title">Built where fiction, code, rhythm, and VR collide.</div>
+          </div>
+          <div class="signal-grid">
+            <div class="signal">
+              <strong>VR Systems</strong>
+              <span>Combat, interaction, presence, prototypes.</span>
+            </div>
+            <div class="signal">
+              <strong>Worldbuilding</strong>
+              <span>Serialized IP, lore, characters, factions.</span>
+            </div>
+            <div class="signal">
+              <strong>AI Pipelines</strong>
+              <span>Creative automation for faster production.</span>
+            </div>
+            <div class="signal">
+              <strong>Music + Media</strong>
+              <span>Nytmaer the Mad Spark and visual systems.</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="work" class="site-shell">
+      <div class="section-head">
+        <h2>What Brackuro Builds</h2>
+        <p>
+          A studio focused on playable ideas, strong identity, practical systems, and original worlds with room to grow.
+        </p>
+      </div>
+
+      <div class="grid three">
+        <article class="card feature">
+          <div>
+            <div class="feature-icon">🎮</div>
+            <h3>VR + Game Design</h3>
+            <p>
+              Weighty combat concepts, interaction design, prototype logic, Quest-conscious systems, and readable gameplay loops.
+            </p>
+          </div>
+          <div class="tag-row">
+            <span class="tag">VR Combat</span>
+            <span class="tag">Interaction</span>
+            <span class="tag">Prototypes</span>
+          </div>
+        </article>
+
+        <article class="card feature">
+          <div>
+            <div class="feature-icon">📚</div>
+            <h3>Narrative Worlds</h3>
+            <p>
+              Character-rich fantasy, cyberpunk, urban madness, faction systems, mythic timelines, and serialized worldbuilding.
+            </p>
+          </div>
+          <div class="tag-row">
+            <span class="tag">Mugen No Sekai</span>
+            <span class="tag">Lore</span>
+            <span class="tag">Characters</span>
+          </div>
+        </article>
+
+        <article class="card feature">
+          <div>
+            <div class="feature-icon">⚡</div>
+            <h3>Creative Automation</h3>
+            <p>
+              AI-supported workflows for visuals, writing, music, posts, research, production planning, and creator operations.
+            </p>
+          </div>
+          <div class="tag-row">
+            <span class="tag">AI</span>
+            <span class="tag">Pipelines</span>
+            <span class="tag">Content Systems</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="systems" class="site-shell">
+      <div class="quote-band">
+        <h2>Designed for the creator who builds the world, the weapon, the song, and the storefront.</h2>
+        <p>
+          Brackuro Studios treats every project as part of a larger creative ecosystem: games feed lore, lore feeds fashion,
+          fashion feeds worlds, worlds feed music, and the whole machine becomes easier to ship through automation.
+        </p>
+      </div>
+    </section>
+
+    <section id="projects" class="site-shell">
+      <div class="section-head">
+        <h2>Featured Universes</h2>
+        <p>
+          Current creative lanes across narrative IP, VR game systems, brand worlds, and music identity.
+        </p>
+      </div>
+
+      <div class="grid three">
+        <article class="card project-card">
+          <div class="project-art"><span>Fantasy Light Novel IP</span></div>
+          <div class="project-body">
+            <h3>Mugen No Sekai</h3>
+            <p>
+              A large-scale fantasy universe built around mana, identity, reincarnation, rhythm, companions, kingdoms, and deep character logic.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Fantasy</span>
+              <span class="tag">Serialized Story</span>
+              <span class="tag">Worldbuilding</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card project-card">
+          <div class="project-art"><span>VR Arcade Shooter</span></div>
+          <div class="project-body">
+            <h3>Chira: Streets of Madness</h3>
+            <p>
+              A top-down VR arcade shooter concept where urban survival, madness energy, wave combat, and store-world lore collide.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Horizon Worlds</span>
+              <span class="tag">Wave Shooter</span>
+              <span class="tag">Arcade</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card project-card">
+          <div class="project-art"><span>Digital Fashion + Lore</span></div>
+          <div class="project-body">
+            <h3>Black Obsidian Protocol</h3>
+            <p>
+              A fashion-forward worldbuilding brand connecting apparel concepts, avatars, storefronts, lore hooks, and visual identity.
+            </p>
+            <div class="tag-row">
+              <span class="tag">BOP</span>
+              <span class="tag">Fashion</span>
+              <span class="tag">Avatar Items</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="site-shell">
+      <div class="section-head">
+        <h2>Capabilities</h2>
+        <p>
+          Practical creative services and internal production lanes that help ideas become usable assets, playable tests, and publishable content.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card">
+          <h3>Design Systems</h3>
+          <p>
+            Game design documents, prototype breakdowns, UI flows, combat loops, interaction rules, and clear system logic for builders.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Creator Content Pipelines</h3>
+          <p>
+            Repeatable systems for turning raw ideas into posts, videos, product listings, visual prompts, music releases, and project pages.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Visual Direction</h3>
+          <p>
+            Brand direction, moodboards, prompt packs, digital fashion concepts, store visuals, covers, posters, and launch assets.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Interactive Prototypes</h3>
+          <p>
+            HTML demos, VR concept flows, Horizon scripts, Unreal/Unity planning, Godot direction, and playable proof-of-concept thinking.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="site-shell">
+      <div class="card contact-card">
+        <div>
+          <p class="eyebrow">Connect With The Studio</p>
+          <h2>Build the next strange, stylish, playable thing.</h2>
+          <p style="color: var(--muted); margin-top: 12px; max-width: 680px;">
+            Follow Brackuro Studios, explore the work, or reach out for collaborations, prototypes, creative systems, and worldbuilding projects.
+          </p>
+        </div>
+        <div class="cta-row">
+          <a class="button primary" href="mailto:kenanbrack@gmail.com">Email</a>
+          <a class="button ghost" href="https://github.com/nytmaer" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="site-shell footer-row">
+      <span>© <span id="year"></span> Brackuro Studios LLC. All rights reserved.</span>
+      <span>Worlds. Systems. Mad Spark.</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
